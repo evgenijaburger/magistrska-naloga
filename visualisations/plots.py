@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 
 from scipy.interpolate import CubicSpline
 
-def read_parsed_data(filter=False):
+def read_parsed_data(filepath="data/parsed_data.json"):
 
-    with open("data/parsed_data.json", "r") as json_file:
+    with open(filepath, "r") as json_file:
         data = json.load(json_file)
 
     print("Število simulacij:", len(data))
@@ -57,7 +57,7 @@ def plot_all_simulated_ponts(data):
     print(f"Range resistance:  {min(y)}, {max(y)}")
     print(f"Range stiffness:  {min(y)}, {max(y)}")
     
-    plt.savefig('final_plots/all_pts_new.png')
+    # plt.savefig('final_plots/all_pts_new.png')
     plt.show()	
 
 
@@ -156,7 +156,7 @@ def plot_flow_and_pp(data, flow_threshold=3):
 
     # plt.colorbar(im,)
 
-    plt.savefig('final_plots/flow_pts.png')
+    # plt.savefig('final_plots/flow_pts.png')
     plt.tight_layout()
     plt.show()
 
@@ -266,7 +266,7 @@ def plot_death_points(data, map_threshold=65, flow_threshold=0.00005, map_upper_
     ax.set_ylim(0.7, 1.5)
     ax.set_zlim(0.1, 1.3)
 
-    plt.savefig('final_plots/death_pts_test.png')
+    # plt.savefig('final_plots/death_pts_test.png')k
 
     plt.show()
 
@@ -436,7 +436,7 @@ def plot_just_one_wave(data):
     # Adjust layout to prevent overlap
     plt.tight_layout()
 
-    plt.savefig('final_plots/just_one_wave.png')
+    # plt.savefig('final_plots/just_one_wave.png')
 
     # Display the plot
     plt.show()

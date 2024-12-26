@@ -63,6 +63,12 @@ def generate_X(data, normalize=True):
     df = pd.DataFrame(new_parts)
     df.dropna(inplace=True)
 
-    df.to_csv("data/normalized_pca_data_FINAL.csv")
+    df.to_csv("machine_learning/pca/pca_data/normalized_pca_data_FINAL.csv")
 
     return df
+
+if __name__=="__main__":
+
+    data = read_parsed_data()
+    df = generate_X(data, normalize=True)
+

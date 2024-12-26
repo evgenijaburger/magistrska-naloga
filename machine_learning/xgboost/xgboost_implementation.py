@@ -94,9 +94,9 @@ def get_mean_feature_score_cv(X, C, R, S, title='contractiliy', mode='cv', k=10,
                                    ]) for feature in feature_importance_weight.keys())
 
 
-    if save: 
-        with open(f"xgboost_final/{title}_feature_importance_FINAL.json", 'w', encoding='utf-8') as file:
-            json.dump(final_result, file, indent=4)
+    # if save: 
+    #     with open(f"xgboost_final/{title}_feature_importance_FINAL.json", 'w', encoding='utf-8') as file:
+    #         json.dump(final_result, file, indent=4)
 
     if r2s:
         return final_result, r2s
@@ -158,15 +158,15 @@ if __name__ == "__main__":
     splits = split_dataset(X, C, R, S, mode='cv', k=10)
     
     final_result, r2s_contractility = get_mean_feature_score_cv(X, C, R, S, title='contractility', mode='cv', k=10, save=True, r2s=True)
-    sorted_features = print_feature_importances(filepath="xgboost_final/contractility_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='kontraktilnost')
+    # sorted_features = print_feature_importances(filepath="xgboost_final/contractility_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='kontraktilnost')
     
 
     final_result, r2s_resistance = get_mean_feature_score_cv(X, C, R, S, title='resistance', mode='cv', k=10, save=True, r2s=True)
-    sorted_features = print_feature_importances(filepath="xgboost_final/resistance_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='upornost')
+    # sorted_features = print_feature_importances(filepath="xgboost_final/resistance_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='upornost')
     
 
     final_result, r2s_stiffness = get_mean_feature_score_cv(X, C, R, S, title='stiffness', mode='cv', k=10, save=True, r2s=True)
-    sorted_features = print_feature_importances(filepath="xgboost_final/stiffness_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='togost')
+    # sorted_features = print_feature_importances(filepath="xgboost_final/stiffness_feature_importance_FINAL.json", final_result=final_result, choice=1, plot_title='togost')
     
     print(f"Average R² for contractility: {np.mean(r2s_contractility):.10f}")
     print(f"Average R² for resistance: {np.mean(r2s_resistance):.10f}")

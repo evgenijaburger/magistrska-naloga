@@ -14,7 +14,7 @@ from scipy.spatial.distance import squareform
 
 def get_one_wave():
 
-    with open("data/parsed_data2.json", "r") as json_file:
+    with open("../data/parsed_data2.json", "r") as json_file:
         data = json.load(json_file)
 
     new_data = []

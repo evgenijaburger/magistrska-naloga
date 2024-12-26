@@ -6,14 +6,16 @@ from sklearn.linear_model import LinearRegression, Lasso
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import r2_score, mean_squared_error, accuracy_score, make_scorer, precision_score, log_loss
 
-from feature_definition.feature_renaming import renaming
+# import os 
+# import sys 
+
+# sys.path.append(os.path.abspath("machine_learning/feature_definition"))
+# from feature_renaming import renaming
 
 import matplotlib.pyplot as plt
 
-# from lasso_regression import lasso_regression, parse_coeffs, split_dataset
 
-
-def load_new_data (filepath="data/features_FINAL.xlsx"):
+def load_new_data (filepath="../../data/features_FINAL.xlsx"):
 
     # read dataframe that has and index column and header
     df = pd.read_excel(filepath, header=0, index_col=0)
@@ -274,7 +276,7 @@ def make_r2_plot(r2_results, alphas, title):
     plt.savefig(f"lasso_plots/r2_plot_{title}_FINAL.png")
     plt.show()
 
-def make_joint_plot(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=False, renaming=renaming, top_n=None):
+def make_joint_plot(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=False, renaming=None, top_n=None):
     """
     Takes the coeffs computed in make_plots and plots average Vrednosti koeficientov for each feature.
     c_coeffs is a list of dictionaries where keys are feature names and values are lists of coefficient value for each alpha
@@ -558,7 +560,7 @@ def make_joint_plot(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot
     plt.show()
 
 
-def make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=False, renaming=renaming, top_n=None):
+def make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=False, renaming=None, top_n=None):
     """
     Takes the coeffs computed in make_plots and plots average Vrednosti koeficientov for each feature.
     c_coeffs is a list of dictionaries where keys are feature names and values are lists of coefficient value for each alpha
@@ -709,9 +711,9 @@ def make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plo
         ax2.set_ylim(-y2_range, y2_range)
 
 
-    # plt.savefig("lasso_plots/average_contractility_FINAL_wo_legend.png")#, bbox_extra_artists=(legend,), bbox_inches='tight')
+    plt.savefig("../../machine_learning/lasso_regression/lasso_plots/average_contractility_FINAL_wo_legend.png")#, bbox_extra_artists=(legend,), bbox_inches='tight')
 
-    plt.show()
+    # plt.show()
 
     plt.figure()
     ax1 = plt.gca()
@@ -779,8 +781,10 @@ def make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plo
         ax1.set_ylim(-y1_range, y1_range)
         ax2.set_ylim(-y2_range, y2_range)
 
+    plt.savefig("../../machine_learning/lasso_regression/lasso_plots/average_resistance_FINAL_wo_legend.png")#, bbox_extra_artists=(legend,), bbox_inches='tight')
 
-    plt.show()
+
+    # plt.show()
 
     plt.figure()
     ax1 = plt.gca()
@@ -853,11 +857,13 @@ def make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plo
         ax1.set_ylim(-y1_range, y1_range)
         ax2.set_ylim(-y2_range, y2_range)
 
+    plt.savefig("../../machine_learning/lasso_regression/lasso_plots/average_stiffness_FINAL_wo_legend.png")#, bbox_extra_artists=(legend,), bbox_inches='tight')
+
     # plt.savefig("lasso_plots/average_stiffness_FINAL_wo_legend.png")#, bbox_extra_artists=(legend,), bbox_inches='tight')
 
-    plt.show()
+    # plt.show()
 
-def make_plots_from_results(alphas, all_results_C, all_results_R, all_results_S, features=feature_names, k= 10, top_n=None):
+def make_plots_from_results(alphas, all_results_C, all_results_R, all_results_S, features=feature_names, k= 10, top_n=None, renaming=None):
     """
     imamo splits, ki je seznam 10 splitov za cross validation
     za vsak split naredim single plot koeficientov
@@ -892,43 +898,26 @@ def make_plots_from_results(alphas, all_results_C, all_results_R, all_results_S,
         s_plot.append(s_r2)
 
 
-    make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=True, top_n=top_n)
-
-    # print(lasso_report)
-    filename_c = "lasso_plots/lasso_report_c.txt"
-    filename_r = "lasso_plots/lasso_report_r.txt"
-    filename_s = "lasso_plots/lasso_report_s.txt"
-    with open(filename_c, 'w') as file:
-        for row in lasso_report_c:
-            file.write(row)
-            file.write("\n")
-    
-    with open(filename_r, 'w') as file:
-        for row in lasso_report_r:
-            file.write(row)
-            file.write("\n")
-
-    with open(filename_s, 'w') as file:
-        for row in lasso_report_s:
-            file.write(row)
-            file.write("\n")
+    make_joint_plot2(c_coeffs, r_coeffs, s_coeffs, alphas, c_plot, r_plot, s_plot, show_r=True, top_n=top_n, renaming=renaming)
 
 
-if __name__=="__main__":
 
-    X, C, R, S, feature_names = load_new_data()
 
-    # orig
-    alphas = list(np.logspace(-3, 0.6, 50))
-    alphas = np.logspace(-3, 0.6, 50).tolist()
+# if __name__=="__main__":
 
-    splits = split_dataset(X, C, R, S, mode='cv', k=10)
+#     X, C, R, S, feature_names = load_new_data()
 
-    all_results_C, all_results_R, all_results_S = compute_results(splits, alphas, feature_names)
+#     # orig
+#     alphas = list(np.logspace(-3, 0.6, 50))
+#     alphas = np.logspace(-3, 0.6, 50).tolist()
+
+#     splits = split_dataset(X, C, R, S, mode='cv', k=10)
+
+#     all_results_C, all_results_R, all_results_S = compute_results(splits, alphas, feature_names)
 
 
     # all_results_C, all_results_R, all_results_S = load_results()
 
-    make_plots_from_results(alphas, all_results_C, all_results_R, all_results_S,  feature_names, top_n=None)
+    # make_plots_from_results(alphas, all_results_C, all_results_R, all_results_S,  feature_names, top_n=None, renaming=None)
 
     # make_plots(splits, alphas)
